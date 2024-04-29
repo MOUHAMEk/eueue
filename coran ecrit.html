@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste d'Actions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Segoe Script', cursive;
+    color: #333;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.action {
+    width: 200px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e7930c;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.action:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#action-photo {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#action-comment,
+#action-launcher {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+#launcher-name,
+#launcher-position,
+#launcher-date {
+    font-weight: bold;
+}
+
+#resolve-action-button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#resolve-action-button:hover {
+    background-color: #45a049;
+}
+
+</style>
+<div class="container">
+    <h1>Liste d'Actions</h1>
+    <div class="actions">
+        <div class="action" id="action1">
+            <h2>Action 1</h2>
+            <p>Description de l'Action 1.</p>
+            <p class="action-info">Lancée par: John Doe, Poste: Manager - Date: 2024-04-29</p>
+        </div>
+        <div class="action" id="action2">
+            <h2>Action 2</h2>
+            <p>Description de l'Action 2.</p>
+            <p class="action-info">Lancée par: Jane Smith, Poste: Analyste - Date: 2024-04-28</p>
+        </div>
+        <div class="action" id="action3">
+            <h2>Action 3</h2>
+            <p>Description de l'Action 3.</p>
+            <p class="action-info">Lancée par: Bob Johnson, Poste: Développeur - Date: 2024-04-27</p>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="action-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img src="#" alt="Photo de l'action" id="action-photo">
+        <p id="action-comment">Commentaire sur l'action.</p>
+        <p id="action-launcher">Lancée par: <span id="launcher-name"></span>, Poste: <span id="launcher-position"></span>, Date: <span id="launcher-date"></span></p>
+        <button id="resolve-action-button">Action Résolue</button>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.action').forEach(function(action) {
+    action.addEventListener('click', function() {
+        // Afficher la modal
+        document.getElementById('action-modal').style.display = 'block';
+        
+        // Récupérer les informations de l'action
+        var actionHeader = action.querySelector('h2').innerText;
+        var actionComment = action.querySelector('p').innerText;
+        var actionInfo = action.querySelector('.action-info').innerText.split(' - ');
+        var launcherName = actionInfo[0].split(': ')[1];
+        var launcherPosition = actionInfo[1].split(': ')[1];
+        var launcherDate = actionInfo[2].split(': ')[1];
+
+        // Mettre à jour les éléments de la modal avec les informations de l'action
+        document.getElementById('action-photo').src = 'placeholder.jpg'; // Remplacer 'placeholder.jpg' par le chemin de votre image
+        document.getElementById('action-comment').innerText = actionComment;
+        document.getElementById('launcher-name').innerText = launcherName;
+        document.getElementById('launcher-position').innerText = launcherPosition;
+        document.getElementById('launcher-date').innerText = launcherDate;
+    });
+});
+
+// Fermer la modal lorsque l'utilisateur clique sur le bouton de fermeture
+document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('action-modal').style.display = 'none';
+});
+
+// Fermer la modal lorsque l'utilisateur clique en dehors de la modal
+window.addEventListener('click', function(event) {
+    var modal = document.getElementById('action-modal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Action lorsque l'utilisateur clique sur le bouton "Action Résolue"
+document.getElementById('resolve-action-button').addEventListener('click', function() {
+    alert('Action résolue avec succès!');
+    document.getElementById('action-modal').style.display = 'none';
+});
+
+</script>
+</body>
+</html>
